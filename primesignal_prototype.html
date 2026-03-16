@@ -1,0 +1,258 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+.pv{background:#0f0f0f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#fff;border-radius:10px;overflow:hidden;}
+.nav{background:#1a1a1a;padding:0 20px;display:flex;align-items:center;height:48px;border-bottom:1px solid #2a2a2a;}
+.logo{font-size:14px;font-weight:700;color:#fff;margin-right:28px;letter-spacing:-0.3px;}
+.logo span{color:#00a8e1;}
+.nl{display:flex;gap:0;align-items:center;}
+.nla{font-size:12px;color:#ccc;padding:0 12px;height:48px;display:flex;align-items:center;cursor:pointer;border-bottom:2px solid transparent;}
+.nla:hover{color:#fff;}
+.nla.on{color:#fff;border-bottom-color:#fff;}
+.ndiv{width:1px;height:20px;background:#3a3a3a;margin:0 4px;}
+.pbadge{background:#00a8e1;color:#000;font-size:10px;font-weight:800;padding:2px 7px;border-radius:3px;margin:0 8px;}
+.nr{margin-left:auto;display:flex;gap:14px;align-items:center;}
+.navic{width:17px;height:17px;color:#888;cursor:pointer;}
+.stabs{background:#141414;padding:0 20px;display:flex;border-bottom:1px solid #222;position:sticky;top:0;z-index:50;}
+.stab{font-size:12px;padding:10px 18px;cursor:pointer;color:#666;border-bottom:2px solid transparent;transition:all 0.15s;}
+.stab.on{color:#00a8e1;border-bottom-color:#00a8e1;font-weight:500;}
+.body{padding:16px 20px 28px;}
+.srow{margin-bottom:28px;}
+.stitle{font-size:14px;font-weight:500;color:#fff;margin-bottom:10px;}
+.cgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;}
+.card{border-radius:6px;overflow:hidden;cursor:pointer;background:#1a1a1a;transition:transform 0.18s;}
+.card:hover{transform:scale(1.04);z-index:5;position:relative;}
+.poster{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;}
+.poster svg{width:100%;height:100%;display:block;}
+.card-bottom{position:absolute;bottom:0;left:0;right:0;padding:6px 8px;display:flex;align-items:flex-end;justify-content:space-between;}
+.lock{display:flex;align-items:center;}
+.lock svg{width:12px;height:12px;}
+.psl{font-size:8px;font-weight:700;padding:2px 7px;border-radius:3px;letter-spacing:0.02em;white-space:nowrap;}
+.lgreen{background:#14532d;color:#bbf7d0;}
+.lred{background:#7b1f1f;color:#fecaca;}
+.notif-wrap{padding:28px 20px;display:flex;flex-direction:column;align-items:center;min-height:380px;justify-content:center;gap:14px;}
+.ncard{background:#1a1a1a;border:0.5px solid #1d5a35;border-radius:10px;padding:18px 20px;max-width:440px;width:100%;}
+.nhead{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
+.ndot{width:8px;height:8px;border-radius:50%;background:#1d9e75;}
+.ntag{font-size:9px;color:#60a5fa;background:#1e3a5f;padding:2px 8px;border-radius:3px;}
+.ninner{display:flex;gap:12px;align-items:flex-start;}
+.nthumb{width:88px;aspect-ratio:16/9;border-radius:4px;overflow:hidden;flex-shrink:0;}
+.nthumb svg{width:100%;height:100%;}
+.ncontent{flex:1;}
+.ntitle{font-size:13px;font-weight:500;color:#fff;margin-bottom:4px;line-height:1.35;}
+.nsub{font-size:11px;color:#888;line-height:1.5;}
+.nbtns{display:flex;gap:8px;margin-top:14px;}
+.nbp{flex:1;background:#1d9e75;color:#fff;border:none;border-radius:5px;padding:9px;font-size:11px;font-weight:500;cursor:pointer;}
+.nbs{flex:1;background:transparent;color:#ccc;border:0.5px solid #333;border-radius:5px;padding:9px;font-size:11px;cursor:pointer;}
+.nmeta{font-size:10px;color:#555;margin-top:10px;text-align:center;}
+.overlay{display:none;align-items:center;justify-content:center;padding:16px;min-height:520px;background:rgba(0,0,0,0.92);}
+.overlay.open{display:flex;}
+.modal{background:#181818;border-radius:10px;width:100%;max-width:400px;overflow:hidden;border:0.5px solid #2a2a2a;}
+.mhero{aspect-ratio:16/9;position:relative;overflow:hidden;}
+.mhero svg{width:100%;height:100%;display:block;}
+.mgrad{position:absolute;bottom:0;left:0;right:0;height:75%;background:linear-gradient(to top,rgba(0,0,0,0.92) 0%,transparent 100%);pointer-events:none;}
+.minfo{position:absolute;bottom:10px;left:12px;right:12px;}
+.mtitle{font-size:18px;font-weight:700;color:#fff;}
+.mmeta{font-size:10px;color:rgba(255,255,255,0.55);margin-top:2px;}
+.mbadge{position:absolute;top:8px;right:8px;font-size:9px;font-weight:700;padding:3px 8px;border-radius:4px;}
+.mclose{position:absolute;top:8px;left:8px;background:rgba(0,0,0,0.7);border:none;color:#aaa;width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;}
+.mbody{padding:12px 14px 18px;}
+.maitag{display:inline-flex;align-items:center;gap:4px;font-size:9px;color:#60a5fa;background:#1e3a5f;padding:2px 8px;border-radius:3px;margin-bottom:10px;}
+.msig{border-radius:7px;padding:10px 12px;margin-bottom:10px;}
+.msig-g{background:#0a1f12;border:0.5px solid #14532d;}
+.msig-r{background:#1f0f0f;border:0.5px solid #7b1f1f;}
+.msigt{font-size:11px;font-weight:500;margin-bottom:4px;}
+.sg{color:#86efac;}
+.sr{color:#fca5a5;}
+.msigr{font-size:11px;color:#888;line-height:1.5;margin-bottom:7px;}
+.msigs{display:flex;align-items:center;gap:6px;font-size:10px;color:#666;}
+.sbars{display:flex;gap:3px;}
+.sb{width:18px;height:3px;border-radius:2px;background:#2a2a2a;}
+.sb.g{background:#1d9e75;}
+.sb.r{background:#e24b4a;}
+.mbtns{display:flex;gap:8px;margin-bottom:8px;}
+.mbblue{flex:1;background:#00a8e1;color:#fff;border:none;border-radius:5px;padding:9px;font-size:11px;font-weight:500;cursor:pointer;}
+.mbgray{flex:1;background:transparent;color:#ccc;border:0.5px solid #333;border-radius:5px;padding:9px;font-size:11px;cursor:pointer;}
+.mnotify{display:flex;align-items:center;gap:5px;font-size:10px;color:#86efac;cursor:pointer;padding:3px 0;}
+.maccess{font-size:10px;color:#555;text-align:center;padding:5px 0;}
+</style>
+
+<div class="pv">
+  <div class="nav">
+    <div class="logo"><span>prime</span> video</div>
+    <div class="nl">
+      <div class="nla on">Home</div>
+      <div class="nla">Movies</div>
+      <div class="nla">TV shows</div>
+      <div class="nla">Live TV</div>
+      <div class="ndiv"></div>
+      <div class="pbadge">prime</div>
+      <div class="nla">Subscriptions</div>
+    </div>
+    <div class="nr">
+      <svg class="navic" viewBox="0 0 18 18" fill="none"><circle cx="7.5" cy="7.5" r="5" stroke="#888" stroke-width="1.4"/><path d="M13 13l3 3" stroke="#888" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <div style="width:26px;height:26px;border-radius:50%;background:#00a8e1;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#000;cursor:pointer;">P</div>
+    </div>
+  </div>
+
+  <div class="stabs">
+    <div class="stab on" onclick="tab('browse',this)">Browse</div>
+    <div class="stab" onclick="tab('notif',this)">Notification</div>
+  </div>
+
+  <div id="t-browse">
+    <div class="body">
+      <div class="srow">
+        <div class="stitle">New releases</div>
+        <div class="cgrid" id="g1"></div>
+      </div>
+      <div class="srow">
+        <div class="stitle">Bollywood hits</div>
+        <div class="cgrid" id="g2"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="t-notif" style="display:none;">
+    <div class="notif-wrap">
+      <div class="ncard">
+        <div class="nhead">
+          <div class="ndot"></div>
+          <span style="font-size:12px;font-weight:500;color:#fff;flex:1;">Watchlist alert</span>
+          <span class="ntag">PrimeSignal AI prediction</span>
+        </div>
+        <div class="ninner">
+          <div class="nthumb">
+            <svg viewBox="0 0 160 90" xmlns="http://www.w3.org/2000/svg">
+              <defs><linearGradient id="dg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a1000"/><stop offset="100%" stop-color="#3a2800"/></linearGradient></defs>
+              <rect width="160" height="90" fill="url(#dg)"/>
+              <ellipse cx="80" cy="55" rx="50" ry="18" fill="#c8860020" />
+              <text x="80" y="38" text-anchor="middle" fill="#f0a030" font-size="11" font-weight="700" font-family="sans-serif">DUNE</text>
+              <text x="80" y="52" text-anchor="middle" fill="#c89030" font-size="7" font-family="sans-serif">AWAKENING</text>
+            </svg>
+          </div>
+          <div class="ncontent">
+            <div class="ntitle">Dune: Awakening goes free on Prime in 3 days</div>
+            <div class="nsub">You saved this 40 days ago. Warner Bros windowing pattern confirms free arrival on March 19.</div>
+          </div>
+        </div>
+        <div class="nbtns">
+          <button class="nbp" onclick="nc('w')">Watch now free</button>
+          <button class="nbs" onclick="nc('r')">Remind me on the day</button>
+        </div>
+        <div class="nmeta" id="nm">Sci-Fi &middot; 2h 45m &middot; Saved 40 days ago</div>
+      </div>
+      <div style="font-size:11px;color:#555;text-align:center;">2 more watchlist titles have PrimeSignal updates this week</div>
+    </div>
+  </div>
+
+  <div class="overlay" id="ov" onclick="hoc(event)">
+    <div class="modal">
+      <div class="mhero" id="mh">
+        <button class="mclose" onclick="cm()">&#x2715;</button>
+        <div id="mbadge" class="mbadge"></div>
+        <div class="mgrad"></div>
+        <div class="minfo">
+          <div class="mtitle" id="mt"></div>
+          <div class="mmeta" id="mm"></div>
+        </div>
+      </div>
+      <div class="mbody">
+        <div class="maitag">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="#60a5fa" stroke-width="1"/><path d="M3 5h4M5 3v4" stroke="#60a5fa" stroke-width="1" stroke-linecap="round"/></svg>
+          PrimeSignal AI prediction
+        </div>
+        <div id="ms"></div>
+        <div class="mbtns" id="mb"></div>
+        <div id="me"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var POSTERS = {
+  MI8: function() { return '<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="mi8g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#050510"/><stop offset="60%" stop-color="#0a0a20"/><stop offset="100%" stop-color="#000008"/></linearGradient></defs><rect width="320" height="180" fill="url(#mi8g)"/><circle cx="240" cy="60" r="50" fill="#ff300008"/><circle cx="240" cy="60" r="30" fill="#ff300010"/><line x1="0" y1="90" x2="320" y2="90" stroke="#ffffff08" stroke-width="0.5"/><text x="22" y="115" fill="#cc2222" font-size="9" font-family="sans-serif" font-weight="700" letter-spacing="2">MISSION</text><text x="22" y="130" fill="#ffffff" font-size="16" font-family="sans-serif" font-weight="900" letter-spacing="1">IMPOSSIBLE</text><text x="22" y="146" fill="#cc2222" font-size="11" font-family="sans-serif" font-weight="700" letter-spacing="3">FINAL RECKONING</text><text x="22" y="162" fill="#888888" font-size="8" font-family="sans-serif">TOM CRUISE</text></svg>'; },
+  SKY: function() { return '<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="skyg" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#000810"/><stop offset="100%" stop-color="#001428"/></linearGradient></defs><rect width="320" height="180" fill="url(#skyg)"/><rect x="0" y="0" width="160" height="180" fill="#001020"/><circle cx="260" cy="50" r="40" fill="#4488ff15"/><text x="20" y="105" fill="#4488ff" font-size="28" font-family="sans-serif" font-weight="900" letter-spacing="-1">SKYFALL</text><text x="20" y="122" fill="#4488ff" font-size="28" font-family="sans-serif" font-weight="900">2</text><text x="20" y="142" fill="#4488cc80" font-size="8" font-family="sans-serif" letter-spacing="2">JAMES BOND</text><text x="20" y="158" fill="#66666680" font-size="7" font-family="sans-serif" letter-spacing="1">007</text></svg>'; },
+  DUN: function() { return '<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="dung" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#100800"/><stop offset="100%" stop-color="#281800"/></linearGradient></defs><rect width="320" height="180" fill="url(#dung)"/><ellipse cx="160" cy="140" rx="140" ry="30" fill="#c8780020"/><ellipse cx="160" cy="140" rx="90" ry="18" fill="#c8780030"/><text x="160" y="65" text-anchor="middle" fill="#e8900a" font-size="36" font-family="sans-serif" font-weight="900" letter-spacing="4">DUNE</text><text x="160" y="84" text-anchor="middle" fill="#b87008" font-size="10" font-family="sans-serif" letter-spacing="5">AWAKENING</text><text x="160" y="105" text-anchor="middle" fill="#80500840" font-size="7" font-family="sans-serif" letter-spacing="2">THE SANDS WILL RISE AGAIN</text></svg>'; },
+  KAL: function() { return '<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="kalg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0a0008"/><stop offset="100%" stop-color="#1a0018"/></linearGradient></defs><rect width="320" height="180" fill="url(#kalg)"/><circle cx="160" cy="80" r="70" fill="#8800ff08"/><circle cx="160" cy="80" r="45" fill="#8800ff12"/><circle cx="160" cy="80" r="22" fill="#8800ff20"/><text x="160" y="98" text-anchor="middle" fill="#cc44ff" font-size="26" font-family="sans-serif" font-weight="900" letter-spacing="1">KALKI</text><text x="160" y="116" text-anchor="middle" fill="#cc44ff" font-size="14" font-family="sans-serif" font-weight="700">2898 AD</text><text x="160" y="134" text-anchor="middle" fill="#8833cc" font-size="10" font-family="sans-serif">PART II</text><text x="160" y="152" text-anchor="middle" fill="#55225580" font-size="7" font-family="sans-serif" letter-spacing="2">PRABHAS &middot; DEEPIKA &middot; AMITABH</text></svg>'; },
+  ST3: function() { return '<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="st3g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#000808"/><stop offset="100%" stop-color="#001010"/></linearGradient></defs><rect width="320" height="180" fill="url(#st3g)"/><text x="28" y="80" fill="#00ff8840" font-size="72" font-family="sans-serif" font-weight="900">3</text><text x="28" y="115" fill="#00ee88" font-size="28" font-family="sans-serif" font-weight="900">STREE</text><text x="28" y="132" fill="#00aa66" font-size="10" font-family="sans-serif" letter-spacing="2">SHE IS BACK</text><text x="28" y="154" fill="#00664440" font-size="7" font-family="sans-serif">RAJKUMMAR RAO &middot; SHRADDHA KAPOOR</text></svg>'; },
+  WAR: function() { return '<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="warg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#100500"/><stop offset="100%" stop-color="#220800"/></linearGradient></defs><rect width="320" height="180" fill="url(#warg)"/><line x1="0" y1="0" x2="320" y2="180" stroke="#ff220010" stroke-width="60"/><text x="160" y="100" text-anchor="middle" fill="#ff4400" font-size="52" font-family="sans-serif" font-weight="900" letter-spacing="-2">WAR</text><text x="160" y="120" text-anchor="middle" fill="#cc2200" font-size="16" font-family="sans-serif" font-weight="700" letter-spacing="6">2</text><text x="160" y="148" text-anchor="middle" fill="#88220040" font-size="7" font-family="sans-serif" letter-spacing="2">HRITHIK ROSHAN &middot; JR NTR</text></svg>'; },
+  RAJ: function() { return '<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="rajg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#000c14"/><stop offset="100%" stop-color="#001828"/></linearGradient></defs><rect width="320" height="180" fill="url(#rajg)"/><circle cx="260" cy="30" r="60" fill="#0088cc15"/><text x="24" y="90" fill="#0099ee" font-size="11" font-family="sans-serif" font-weight="700" letter-spacing="3">RAJADHIRAJ</text><rect x="24" y="96" width="80" height="1" fill="#0099ee60"/><text x="24" y="115" fill="#ffffff" font-size="20" font-family="sans-serif" font-weight="700">A Story of</text><text x="24" y="136" fill="#ffffff" font-size="20" font-family="sans-serif" font-weight="700">Kings</text><text x="24" y="160" fill="#44668860" font-size="7" font-family="sans-serif" letter-spacing="1">AN EPIC DRAMA</text></svg>'; },
+  PU3: function() { return '<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="pu3g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0c0000"/><stop offset="100%" stop-color="#1c0500"/></linearGradient></defs><rect width="320" height="180" fill="url(#pu3g)"/><text x="160" y="50" text-anchor="middle" fill="#ff220015" font-size="80" font-family="sans-serif" font-weight="900">P</text><text x="160" y="100" text-anchor="middle" fill="#ff6600" font-size="22" font-family="sans-serif" font-weight="900" letter-spacing="3">PUSHPA</text><text x="160" y="118" text-anchor="middle" fill="#ff4400" font-size="14" font-family="sans-serif" font-weight="700" letter-spacing="4">PART 3</text><text x="160" y="140" text-anchor="middle" fill="#cc220080" font-size="9" font-family="sans-serif" letter-spacing="2">THE RULE CONTINUES</text><text x="160" y="160" text-anchor="middle" fill="#88220040" font-size="7" font-family="sans-serif">ALLU ARJUN</text></svg>'; },
+};
+
+var DATA = [
+  {r:1,id:"MI8",title:"Mission: Impossible — Final Reckoning",sub:"Action &middot; 2025 &middot; 2h 43m",type:"g",days:34,sig:"Strong signal",bars:3,reason:"Paramount titles average 68 days on Prime India. You are at day 34."},
+  {r:1,id:"SKY",title:"Skyfall 2",sub:"Thriller &middot; 2025 &middot; 2h 12m",type:"r",reason:"No Prime streaming deal confirmed for MGM on this title."},
+  {r:1,id:"DUN",title:"Dune: Awakening",sub:"Sci-Fi &middot; 2025 &middot; 2h 45m",type:"g",days:12,sig:"Strong signal",bars:3,reason:"Warner Bros titles average 55 days. Arrival confirmed."},
+  {r:1,id:"KAL",title:"Kalki 2898 Part 2",sub:"Action &middot; 2025 &middot; 3h 10m",type:"r",reason:"Distributor has not signed a Prime deal for this title."},
+  {r:2,id:"ST3",title:"Stree 3",sub:"Comedy-Horror &middot; 2025 &middot; 2h 5m",type:"g",days:58,sig:"Medium signal",bars:2,reason:"Maddock Films titles typically arrive free within 90 days."},
+  {r:2,id:"WAR",title:"War 2",sub:"Action &middot; 2025 &middot; 2h 55m",type:"r",reason:"YRF titles have limited Prime inclusion history."},
+  {r:2,id:"RAJ",title:"Rajadhiraj",sub:"Drama &middot; 2025 &middot; 2h 18m",type:"g",days:7,sig:"Strong signal",bars:3,reason:"Free arrival confirmed by studio. 7 days remaining."},
+  {r:2,id:"PU3",title:"Pushpa 3",sub:"Action &middot; 2025 &middot; 3h 2m",type:"r",reason:"Mythri Movie Makers has not confirmed a Prime deal."},
+];
+
+function sbars(n,t){var h='<div class="sbars">';for(var i=0;i<3;i++)h+='<div class="sb'+(i<n?' '+t:'')+'"></div>';return h+'</div>';}
+
+function makeCard(d,i){
+  var lbl=d.type==='g'
+    ?'<span class="psl lgreen">Free in '+d.days+' days</span>'
+    :'<span class="psl lred">Rent only</span>';
+  return '<div class="card" onclick="om('+i+')">'
+    +'<div class="poster" style="position:relative;">'
+    +POSTERS[d.id]()
+    +'<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,transparent 50%);pointer-events:none;"></div>'
+    +'<div class="card-bottom">'
+    +'<div class="lock"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="2" y="5.5" width="8" height="5.5" rx="1" fill="#f0c040"/><path d="M3.5 5.5V3.5a2.5 2.5 0 015 0v2" stroke="#f0c040" stroke-width="1.2"/></svg></div>'
+    +lbl
+    +'</div>'
+    +'</div>'
+    +'</div>';
+}
+
+var g1='',g2='';
+DATA.forEach(function(d,i){if(d.r===1)g1+=makeCard(d,i);else g2+=makeCard(d,i);});
+document.getElementById('g1').innerHTML=g1;
+document.getElementById('g2').innerHTML=g2;
+
+function om(i){
+  var d=DATA[i];
+  var mh=document.getElementById('mh');
+  mh.innerHTML='<button class="mclose" onclick="cm()">&#x2715;</button>'
+    +POSTERS[d.id]()
+    +'<div class="mgrad"></div>'
+    +'<div id="mbadge" class="mbadge"></div>'
+    +'<div class="minfo"><div class="mtitle" id="mt"></div><div class="mmeta" id="mm"></div></div>';
+  document.getElementById('mt').textContent=d.title;
+  document.getElementById('mm').innerHTML=d.sub;
+  var badge=document.getElementById('mbadge');
+  var ms=document.getElementById('ms');
+  var mb=document.getElementById('mb');
+  var me=document.getElementById('me');
+  if(d.type==='g'){
+    badge.textContent='Free in '+d.days+' days';
+    badge.style.cssText='background:#14532d;color:#bbf7d0;';
+    ms.innerHTML='<div class="msig msig-g"><div class="msigt sg">Included in Prime in '+d.days+' days</div><div class="msigr">'+d.reason+'</div><div class="msigs">'+sbars(d.bars,'g')+'<span>'+d.sig+'</span></div></div>';
+    mb.innerHTML='<button class="mbblue" onclick="cm()">Rent now &middot; &#8377;99</button><button class="mbgray" onclick="cm()">Wait '+d.days+' days &middot; Free</button>';
+    me.innerHTML='<div class="mnotify"><svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M5.5 1s-3 1.5-3 5v2l-1 1v.5h8v-.5l-1-1V6c0-3.5-3-5-3-5z" stroke="#86efac" stroke-width="1" fill="none"/><circle cx="5.5" cy="10" r="1" fill="#86efac"/></svg> Notify me when free</div>';
+  } else {
+    badge.textContent='Rent only';
+    badge.style.cssText='background:#7b1f1f;color:#fecaca;';
+    ms.innerHTML='<div class="msig msig-r"><div class="msigt sr">Rent only — no free date predicted</div><div class="msigr">'+d.reason+'</div><div class="msigs">'+sbars(0,'r')+'<span>No signal</span></div></div>';
+    mb.innerHTML='<button class="mbblue" onclick="cm()">Rent now &middot; &#8377;99</button>';
+    me.innerHTML='<div class="maccess">Rental gives 48-hour access from first play</div>';
+  }
+  document.getElementById('ov').classList.add('open');
+}
+
+function cm(){document.getElementById('ov').classList.remove('open');}
+function hoc(e){if(e.target===document.getElementById('ov'))cm();}
+function tab(n,el){
+  document.getElementById('t-browse').style.display=n==='browse'?'block':'none';
+  document.getElementById('t-notif').style.display=n==='notif'?'block':'none';
+  document.querySelectorAll('.stab').forEach(function(t){t.classList.remove('on');});
+  el.classList.add('on');
+}
+function nc(t){document.getElementById('nm').textContent=t==='w'?'Opening Dune: Awakening — enjoy!':'Reminder set for March 19.';}
+</script>
